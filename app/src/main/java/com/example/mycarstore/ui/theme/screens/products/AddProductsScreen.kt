@@ -1,7 +1,7 @@
 package com.example.mycarstore.ui.theme.screens.products
 
 import android.content.Context
-import com.google.firebase.storage.FirebaseStorage
+
 import android.net.Uri
 import android.provider.MediaStore
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -98,7 +98,7 @@ fun AddProductsScreen(navController:NavHostController){
             value = carmodel,
             onValueChange = { carmodel = it },
             label = { Text(text = "Product name ") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)                                                                                                                                            
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -120,7 +120,7 @@ fun AddProductsScreen(navController:NavHostController){
         )
 
         Spacer(modifier = Modifier.height(10.dp))
-                                             
+
         OutlinedTextField(
             value = mileage,
             onValueChange = { mileage = it },
@@ -136,76 +136,31 @@ fun AddProductsScreen(navController:NavHostController){
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
         )
 
-        Spacer(modifier = Modifier.height(10.dp))
-
-        val list = listOf("diesel","Petrol","Hybrid(diesel)","Hydrid(petrol)")
-        var isExpanded by remember { mutableStateOf(false) }
-
-
-        Row {
-            ExposedDropdownMenuBox(expanded = true,
-                onExpandedChange = {isExpanded = !isExpanded})
-            {
-                   OutlinedTextField(
-                    value = fueltype,
-                    onValueChange = { fueltype = it },
-                    label = { Text(text = "fueltype") },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                    textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
-                    singleLine = true,
-                    readOnly = true,
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)}
-                )
-                ExposedDropdownMenu(expanded = isExpanded,
-                    onDismissRequest = { isExpanded = false}) {
-                    list.forEachIndexed{index,text ->
-                        DropdownMenuItem(text = { Text(text = text) },
-                            onClick = {
-                                fueltype = list[index]
-                                isExpanded = false
-                            },
-                            contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
-                            )
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-            val list1 = listOf("Automatic","Manual")
-            var isExpanded by remember { mutableStateOf(false) }
-
-            ExposedDropdownMenuBox(expanded = true,
-                onExpandedChange = {isExpanded = !isExpanded})
-            {
-                OutlinedTextField(
-                    value = transmission,
-                    onValueChange = { transmission = it },
-                    label = { Text(text = "transmission") },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                    textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
-                    singleLine = true,
-                    readOnly = true,
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)}
-                )
-                ExposedDropdownMenu(expanded = isExpanded,
-                    onDismissRequest = { isExpanded = false}) {
-                    list1.forEachIndexed{index,text ->
-                        DropdownMenuItem(text = { Text(text = text) },
-                            onClick = {
-                                transmission = list1[index]
-                                isExpanded = false
-                            },
-                            contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
-                        )
-                    }
-                }
-            }
-        }
-
-
-
 
         Spacer(modifier = Modifier.height(10.dp))
+        OutlinedTextField(
+            value = fueltype,
+            onValueChange = { fueltype = it },
+            label = { Text(text = "fuelType") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+        )
 
+        Spacer(modifier = Modifier.height(10.dp))
+        OutlinedTextField(
+            value = transmission,
+            onValueChange = { transmission = it },
+            label = { Text(text = "transmission") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+        )
+
+
+
+        //---------------------IMAGE PICKER START-----------------------------------//
+
+        var modifier = Modifier
+        ImagePicker(modifier,context, navController, carmodel.trim(), carbrand.trim(), price.trim())
+
+        //---------------------IMAGE PICKER END-----------------------------------//
 
 
 
@@ -213,44 +168,58 @@ fun AddProductsScreen(navController:NavHostController){
 }
 
 @Composable
-fun SelectImagesScreen(onImagesSelected: (List<Uri>) -> Unit) {
-    val launcher = rememberLauncherForActivityResult(
-        ActivityResultContracts.GetMultipleContents()
-    ) { uris ->
-        onImagesSelected(uris)
-    }
+fun ImagePicker(modifier: Modifier = Modifier, context: Context,navController: NavHostController, name:String, quantity:String, price:String) {
+    var hasImage by remember { mutableStateOf(false) }
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
 
-    Button(onClick = { launcher.launch("image/*") }) {
-        Text("Select Images")
-    }
-}
+    val imagePicker = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = { uri ->
+            hasImage = uri != null
+            imageUri = uri
+        }
+    )
+
+    Column(modifier = modifier,) {
+        if (hasImage && imageUri != null) {
+            val bitmap = MediaStore.Images.Media.
+            getBitmap(context.contentResolver,imageUri)
+            Image(bitmap = bitmap.asImageBitmap(), contentDescription = "Selected image")
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 30.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,) {
+            Button(onClick = {imagePicker.launch("image/*")},
+                modifier = Modifier
+                    .width(300.dp)
+                    .height(50.dp)
 
 
-fun uploadImages(uris: List<Uri>, onUploadSuccess: (List<String>) -> Unit, onUploadFailure: (Exception) -> Unit) {
-    val storage = FirebaseStorage.getInstance()
-    val scope = CoroutineScope(Dispatchers.IO)
 
-    val uploadedUrls = mutableListOf<String>()
 
-    scope.launch {
-        try {
-            uris.forEach { uri ->
-                val fileName = UUID.randomUUID().toString()
-                val storageRef = storage.reference.child("images/$fileName")
-
-                storageRef.putFile(uri).await()  // Wait until the upload is completed
-                val downloadUrl = storageRef.downloadUrl.await()
-
-                uploadedUrls.add(downloadUrl.toString())
+            ) {
+                Text(
+                    text = "Select Image"
+                )
             }
-            onUploadSuccess(uploadedUrls)  // Return the list of download URLs
-        } catch (e: Exception) {
-            onUploadFailure(e)
+
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Button(onClick = {
+                //-----------WRITE THE UPLOAD LOGIC HERE---------------//
+                var productRepository = ProductViewModel(navController,context)
+                productRepository.uploadProduct(name, quantity, price,imageUri!!)
+
+
+            }) {
+                Text(text = "Upload")
+            }
         }
     }
 }
-
-
 @Composable
 @Preview(showBackground = true)
 fun AddProductsScreenPreview(){
