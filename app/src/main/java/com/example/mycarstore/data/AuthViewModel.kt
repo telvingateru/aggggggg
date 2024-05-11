@@ -4,9 +4,9 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.widget.Toast
 import androidx.navigation.NavHostController
-import com.example.carstore.models.User
-import com.example.carstore.navigation.HOME_URL
-import com.example.carstore.navigation.LOGIN_URL
+import com.example.mycarstore.models.User
+import com.example.mycarstore.navigation.HOME_URL
+import com.example.mycarstore.navigation.LOGIN_URL
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
