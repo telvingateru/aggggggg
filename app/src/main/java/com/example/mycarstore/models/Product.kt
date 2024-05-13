@@ -1,18 +1,24 @@
 package com.example.mycarstore.models
 
 class Product {
-    var name:String = ""
-    var quantity:String = ""
+    var carmodel:String = ""
+    var carbrand:String = ""
     var price:String = ""
     var imageUrl:String = ""
-    var id:String = ""
+    var mileage:String = ""
+    var enginesize:String = ""
+    var fueltype:String = ""
+    var transmission:String = ""
 
-    constructor(name: String, quantity: String, price: String, imageUrl: String, id: String) {
-        this.name = name
-        this.quantity = quantity
+    constructor(carmodel: String,carbrand: String, price: String, imageUrl: String, enginesize: String, fueltype: String, transmission: String, mileage: String) {
+        this.carmodel = carmodel
+        this.carbrand = carbrand
         this.price = price
         this.imageUrl = imageUrl
-        this.id = id
+        this.mileage = mileage
+        this.enginesize = enginesize
+        this.fueltype = fueltype
+        this.transmission = transmission
     }
 
     constructor()

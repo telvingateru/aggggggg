@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -158,7 +159,7 @@ fun AddProductsScreen(navController:NavHostController){
         //---------------------IMAGE PICKER START-----------------------------------//
 
         var modifier = Modifier
-        ImagePicker(modifier,context, navController, carmodel.trim(), carbrand.trim(), price.trim())
+                ImagePicker(modifier,context, navController, carmodel.trim(), carbrand.trim(), price.trim(), enginesize.trim(), mileage.trim(), fueltype.trim(), transmission.trim())
 
         //---------------------IMAGE PICKER END-----------------------------------//
 
@@ -168,7 +169,7 @@ fun AddProductsScreen(navController:NavHostController){
 }
 
 @Composable
-fun ImagePicker(modifier: Modifier = Modifier, context: Context,navController: NavHostController, name:String, quantity:String, price:String) {
+fun ImagePicker(modifier: Modifier = Modifier, context: Context,navController: NavHostController, carbrand:String, price:String, enginesize:String, fueltype:String, transmission:String, mileage:String, carmodel:String) {
     var hasImage by remember { mutableStateOf(false) }
     var imageUri by remember { mutableStateOf<Uri?>(null) }
 
@@ -191,7 +192,9 @@ fun ImagePicker(modifier: Modifier = Modifier, context: Context,navController: N
                 .fillMaxWidth()
                 .padding(bottom = 30.dp),
             horizontalAlignment = Alignment.CenterHorizontally,) {
-            Button(onClick = {imagePicker.launch("image/*")},
+            Button(
+                onClick = {imagePicker.launch("image/*")},
+                shape = RoundedCornerShape(5.dp),
                 modifier = Modifier
                     .width(300.dp)
                     .height(50.dp)
@@ -211,7 +214,7 @@ fun ImagePicker(modifier: Modifier = Modifier, context: Context,navController: N
             Button(onClick = {
                 //-----------WRITE THE UPLOAD LOGIC HERE---------------//
                 var productRepository = ProductViewModel(navController,context)
-                productRepository.uploadProduct(name, quantity, price,imageUri!!)
+                productRepository.uploadProduct(carbrand, carmodel, price, enginesize, fueltype, transmission, mileage, imageUri!!)
 
 
             }) {
