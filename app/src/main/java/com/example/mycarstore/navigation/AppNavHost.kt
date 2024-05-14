@@ -21,7 +21,6 @@ import com.example.mycarstore.ui.theme.screens.home.HomeScreen
 import com.example.mycarstore.ui.theme.screens.login.LoginScreen
 import com.example.mycarstore.ui.theme.screens.products.AddProductsScreen
 import com.example.mycarstore.ui.theme.screens.products.ViewProductsScreen
-import com.example.mycarstore.ui.theme.screens.sell.SellScreen
 import com.example.mycarstore.ui.theme.screens.signup.SignupScreen
 import com.example.mycarstore.ui.theme.screens.splashscreen.SplashScreen
 
@@ -55,9 +54,6 @@ fun AppNavHost(
         }
         composable(AUDIQ7_URL){
             Audiq7Screen(navController = navController)
-        }
-        composable(SELL_URL){
-            SellScreen(navController = navController)
         }
         composable(COROLLA1_URL){
             CorollaScreen(navController =  navController)

@@ -45,7 +45,7 @@ import com.example.mycarstore.navigation.ADD_PRODUCTS_URL
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ViewProductScreen(navController: NavHostController) {
+fun ViewProductsScreen(navController: NavHostController) {
     Column(modifier = Modifier
 
         .fillMaxSize(),
@@ -57,7 +57,7 @@ fun ViewProductScreen(navController: NavHostController) {
         var productRepository = ProductViewModel(navController, context)
 
 
-        val emptyProductState = remember { mutableStateOf(Product("","","","","","","","")) }
+        val emptyProductState = remember { mutableStateOf(Product("","","","","","","","") }
         var emptyProductsListState = remember { mutableStateListOf<Product>() }
 
         var products = productRepository.allProducts(emptyProductState, emptyProductsListState)
@@ -312,6 +312,6 @@ fun ViewItem(
 @Preview(showBackground = true)
 fun ViewProductsScreenPreview(){
 
-        ViewProductScreen(navController = rememberNavController())
+        ViewProductsScreen(navController = rememberNavController())
 
 }

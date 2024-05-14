@@ -17,4 +17,4 @@ const val VOGUE_URL = "vogue"
 const val CROWN_URL = "crown"
 const val EVOQUE_URL = "evoque"
 const val VITZ_URL = "vitz"
-const val SELL_URL = "sell"
+

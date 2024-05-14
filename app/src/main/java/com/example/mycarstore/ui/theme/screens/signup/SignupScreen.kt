@@ -105,7 +105,5 @@ fun SignupScreen(navController:NavHostController){
 @Composable
 @Preview(showBackground = true)
 fun SignupScreenPreview(){
-
-        SignupScreen(navController = rememberNavController())
-
+    SignupScreen(navController = rememberNavController())
 }
