@@ -75,7 +75,7 @@ import com.example.mycarstore.ui.theme.Orange
 @Composable
 fun HomeScreen(navController:NavHostController){
     Column(
-        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -528,8 +528,8 @@ val bottomNavItems = listOf(
 
 
     BottomNavItem(
-        title = "Rent",
-        route="Rent",
+        title = "2nd cars",
+        route="view_products",
         selectedIcon=Icons.Filled.Star,
         unselectedIcon=Icons.Outlined.Person,
         hasNews = true,
