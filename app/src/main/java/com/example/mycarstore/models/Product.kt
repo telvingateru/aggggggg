@@ -9,8 +9,9 @@ class Product {
     var enginesize:String = ""
     var fueltype:String = ""
     var transmission:String = ""
+    var id:String = ""
 
-    constructor(carmodel: String,carbrand: String, price: String, imageUrl: String, enginesize: String, fueltype: String, transmission: String, mileage: String) {
+    constructor(carmodel: String,carbrand: String, price: String, imageUrl: String, enginesize: String, id: String, fueltype: String, transmission: String, mileage: String) {
         this.carmodel = carmodel
         this.carbrand = carbrand
         this.price = price
@@ -19,6 +20,7 @@ class Product {
         this.enginesize = enginesize
         this.fueltype = fueltype
         this.transmission = transmission
+        this.id = id
     }
 
     constructor()

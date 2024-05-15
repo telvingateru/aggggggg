@@ -159,7 +159,7 @@ fun AddProductsScreen(navController:NavHostController){
         //---------------------IMAGE PICKER START-----------------------------------//
 
         var modifier = Modifier
-                ImagePicker(modifier,context, navController, carmodel.trim(), carbrand.trim(), price.trim(), enginesize.trim(), mileage.trim(), fueltype.trim(), transmission.trim())
+        ImagePicker(modifier,context, navController, carmodel.trim(), carbrand.trim(), price.trim(), enginesize.trim(), mileage.trim(), fueltype.trim(), transmission.trim())
 
         //---------------------IMAGE PICKER END-----------------------------------//
 

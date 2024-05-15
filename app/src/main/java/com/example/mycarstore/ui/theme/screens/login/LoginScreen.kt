@@ -99,6 +99,11 @@ fun LoginScreen(navController:NavHostController){
         }) {
             Text(text = "Sign Up")
         }
+        Button(onClick = {
+            navController.navigate(HOME_URL)
+        }) {
+            Text(text = "Sign Up")
+        }
     }
 }
 

@@ -75,7 +75,7 @@ import com.example.mycarstore.ui.theme.Orange
 @Composable
 fun HomeScreen(navController:NavHostController){
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 

@@ -57,7 +57,7 @@ fun ViewProductsScreen(navController: NavHostController) {
         var productRepository = ProductViewModel(navController, context)
 
 
-        val emptyProductState = remember { mutableStateOf(Product("","","","","","","","") }
+        val emptyProductState = remember { mutableStateOf(Product("","","","","","","","","")) }
         var emptyProductsListState = remember { mutableStateListOf<Product>() }
 
         var products = productRepository.allProducts(emptyProductState, emptyProductsListState)
